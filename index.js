@@ -38,7 +38,7 @@ const LocalWebDriverBase =
     win32: driverCommand,
   };
 
-  this.ENV_CMD = this.browserName.toUpperCase() + '_CMD';
+  this.ENV_CMD = driverCommand.toUpperCase() + '_PATH';
 
   const config = {
     protocol: 'http:',

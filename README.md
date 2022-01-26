@@ -17,6 +17,16 @@ npm install --save-dev karma-local-wd-launcher
 ```
 
 
+## Drivers
+
+This launcher assumes that drivers such as `chromedriver`, `geckodriver`, and
+`safaridriver` (Mac only) are already installed, executable, and in your `PATH`.
+
+Alternately, you may use the environment variables `CHROMEDRIVER_PATH`,
+`GECKODRIVER_PATH`, or `SAFARIDRIVER_PATH` to indicate where these drivers are
+installed.
+
+
 ## Configuration
 
 ```js
