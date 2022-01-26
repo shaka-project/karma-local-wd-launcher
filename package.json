@@ -1,0 +1,25 @@
+{
+  "name": "karma-local-wd-launcher",
+  "version": "1.0.0",
+  "description": "Karma Local WebDriver Launcher - Launches local web browsers using WebDriver, to enable screenshots and other advanced tests to be executed in-browser.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joeyparrish/karma-local-wd-launcher"
+  },
+  "keywords": [
+    "karma-plugin",
+    "karma-launcher",
+    "chrome",
+    "firefox",
+    "safari"
+  ],
+  "author": "Joey Parrish <joeyparrish@google.com>",
+  "dependencies": {
+    "wd": "^1.14.0"
+  },
+  "peerDependencies": {
+    "karma": "^6.2.0"
+  },
+  "license": "Apache-2.0"
+}
