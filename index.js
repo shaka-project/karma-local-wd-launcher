@@ -26,8 +26,8 @@ const PLATFORM_MAP = {
   'linux': 'Linux',
 };
 
-const LocalWebDriverBase =
-    function(browserName, driverCommand, baseBrowserDecorator, logger) {
+const LocalWebDriverBase = function(
+    browserName, driverCommand, argsFromPort, baseBrowserDecorator, logger) {
   baseBrowserDecorator(this);
 
   this.browserName = browserName;
@@ -38,12 +38,17 @@ const LocalWebDriverBase =
     win32: driverCommand,
   };
 
+  const port = Math.floor((Math.random() * 1000)) + 4000;
+
+  // Called by the base class to get arguments to pass to the driver command.
+  this._getOptions = () => argsFromPort(port.toString());
+
   this.ENV_CMD = driverCommand.toUpperCase() + '_PATH';
 
   const config = {
     protocol: 'http:',
     hostname: '127.0.0.1',
-    port: Math.floor((Math.random() * 1000)) + 4000,
+    port,
     pathname: '/'
   };
 
@@ -72,8 +77,6 @@ const LocalWebDriverBase =
   this.browser.on('http', (meth, path, data) => {
     log.debug('[http] ' + meth + ' ' + path + ' ' + (data || ''));
   });
-
-  this._getOptions = () => ['-p', config.port.toString()];
 
   this.on('start', (url) => {
     this.browser.init(this.spec, (error) => {
@@ -141,18 +144,25 @@ const LocalWebDriverBase =
 
 const LocalWebDriverChrome = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'Chrome', 'chromedriver', baseBrowserDecorator, logger);
+      'Chrome', 'chromedriver', (port) => ['--port=' + port],
+      baseBrowserDecorator, logger);
 };
+
+// TODO: Add Chrome on android?
 
 const LocalWebDriverFirefox = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'Firefox', 'geckodriver', baseBrowserDecorator, logger);
+      'Firefox', 'geckodriver', (port) => ['-p', port],
+      baseBrowserDecorator, logger);
 };
 
 const LocalWebDriverSafari = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'Safari', 'safaridriver', baseBrowserDecorator, logger);
+      'Safari', '/usr/bin/safaridriver', (port) => ['-p', port],
+      baseBrowserDecorator, logger);
 };
+
+// TODO: Add MS Edge
 
 LocalWebDriverChrome.$inject = ['baseBrowserDecorator', 'logger'];
 LocalWebDriverFirefox.$inject = ['baseBrowserDecorator', 'logger'];
