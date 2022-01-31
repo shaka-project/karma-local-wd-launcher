@@ -17,7 +17,8 @@
   ],
   "author": "Joey Parrish <joeyparrish@google.com>",
   "dependencies": {
-    "wd": "^1.14.0"
+    "wd": "^1.14.0",
+    "webdriver-installer": "^1.0.0"
   },
   "peerDependencies": {
     "karma": "^6.2.0"

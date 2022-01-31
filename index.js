@@ -15,9 +15,18 @@
  * Supports Chrome, Firefox, and Safari.
  */
 
+const fs = require('fs');
 const os = require('os');
+const path = require('path');
 const url = require('url');
 const wd = require('wd');
+
+const {installWebDrivers} = require('webdriver-installer');
+
+const DRIVER_CACHE = path.join(os.homedir(), '.webdriver-installer-cache');
+fs.mkdirSync(DRIVER_CACHE, {recursive: true});
+
+let driversInstalledPromise = null;
 
 // Map nodejs OS names to Selenium platform names.
 const PLATFORM_MAP = {
@@ -32,6 +41,14 @@ const LocalWebDriverBase = function(
 
   this.browserName = browserName;
 
+  if (driverCommand[0] == '/') {
+    // Absolute path.  Keep it.
+  } else {
+    // File name.  Assume it's in our driver cache.
+    driverCommand = path.join(DRIVER_CACHE, driverCommand);
+  }
+
+  // Checked by the base class to determine what command to run.
   this.DEFAULT_CMD = {
     linux: driverCommand,
     darwin: driverCommand,
@@ -43,7 +60,8 @@ const LocalWebDriverBase = function(
   // Called by the base class to get arguments to pass to the driver command.
   this._getOptions = () => argsFromPort(port.toString());
 
-  this.ENV_CMD = driverCommand.toUpperCase() + '_PATH';
+  // An environment variable that can be used to override the command path.
+  this.ENV_CMD = driverCommand.toUpperCase().replace('-', '_') + '_PATH';
 
   const config = {
     protocol: 'http:',
@@ -110,7 +128,18 @@ const LocalWebDriverBase = function(
   const originalStart = this.start;
   let previousUrl = null;
 
-  this.start = (url) => {
+  this.start = async (url) => {
+    // If we haven't installed drivers yet in this session, start the
+    // installation process now.
+    if (!driversInstalledPromise) {
+      // TODO: Tie logging for this to karma log settings.
+      driversInstalledPromise =
+          installWebDrivers(DRIVER_CACHE, /* logging= */ false);
+    }
+
+    // Wait for drivers to be installed for all local browsers.
+    await driversInstalledPromise;
+
     previousUrl = url;
     originalStart.call(this, url);
   };
