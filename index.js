@@ -121,7 +121,7 @@ const LocalWebDriverBase = function(
     }
 
     this.state = 'RESTARTING';
-    await this.stopWebDriver();
+    await this.stopWebdriver_();
 
     if (this.state != 'BEING_FORCE_KILLED') {
       log.debug(`Restarting ${this.name}`)
