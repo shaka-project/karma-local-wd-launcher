@@ -44,6 +44,10 @@ const LocalWebDriverBase = function(
 
   this.browserName = browserName;
 
+  // An environment variable that can be used to override the command path.
+  // Must be computed before the cache path is prepended to the driverCommand.
+  this.ENV_CMD = driverCommand.toUpperCase().replace('-', '_') + '_PATH';
+
   if (driverCommand[0] == '/') {
     // Absolute path.  Keep it.
   } else {
@@ -63,9 +67,6 @@ const LocalWebDriverBase = function(
 
   // Called by the base class to get arguments to pass to the driver command.
   this._getOptions = () => argsFromPort(port.toString());
-
-  // An environment variable that can be used to override the command path.
-  this.ENV_CMD = driverCommand.toUpperCase().replace('-', '_') + '_PATH';
 
   const config = {
     protocol: 'http:',
