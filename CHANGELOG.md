@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.5...v1.3.0) (2022-02-03)
+
+
+### Features
+
+* Add MS Edge support on Linux and Mac ([97e8f2e](https://github.com/joeyparrish/karma-local-wd-launcher/commit/97e8f2e078920e523138fe67bfd0e6efe199dd17))
+* Log the contents of the driver cache on failure to run the driver ([0c2f1e3](https://github.com/joeyparrish/karma-local-wd-launcher/commit/0c2f1e35bdde6311c60320b1a707c23f7ec70e22))
+
+
+### Bug Fixes
+
+* Fix GitHub API rate limit issues getting geckodriver release ([97e8f2e](https://github.com/joeyparrish/karma-local-wd-launcher/commit/97e8f2e078920e523138fe67bfd0e6efe199dd17))
+
 ### [1.2.5](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.4...v1.2.5) (2022-02-03)
 
 
