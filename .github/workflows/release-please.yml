@@ -32,8 +32,12 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - run: npm pack
         if: ${{ steps.release.outputs.release_created }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-release-asset@v1
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.major }}-${{ steps.release.outputs.minor }}-${{ steps.release.outputs.patch }}.tgz
         with:
-          name: my-artifact
-          path: karma-local-wd-launcher-*.tgz
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          path: karma-local-wd-launcher-${{ env.RELEASE_VERSION }}.tgz
+          asset_name: karma-local-wd-launcher-${{ env.RELEASE_VERSION }}.tgz
+          asset_content_type: application/gzip
         if: ${{ steps.release.outputs.release_created }}
