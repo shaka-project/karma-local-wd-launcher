@@ -97,7 +97,9 @@ const LocalWebDriverBase = function(
     log.debug('[http] ' + meth + ' ' + path + ' ' + (data || ''));
   });
 
-  this.on('start', (url) => {
+  this.on('start', async (url) => {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     this.browser.init(this.spec, (error) => {
       if (error) {
         log.error(`Could not connect to ${this.browserName} WebDriver`);
