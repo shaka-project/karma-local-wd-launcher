@@ -83,6 +83,8 @@ const LocalWebDriverBase = function(
   this.spec = {
     browserName: this.browserName.toLowerCase(),
     platform: PLATFORM_MAP[os.platform()],
+    // This is necessary for safaridriver:
+    allowW3C: true,
   };
 
   this.browser.on('status', (info) => {
