@@ -54,13 +54,14 @@ const LocalWebDriverBase = function(
     // File name.  Assume it's in our driver cache.
     driverCommand = path.join(DRIVER_CACHE, driverCommand);
   }
+
   log.debug(`Default driver command: ${driverCommand}`);
 
   // Checked by the base class to determine what command to run.
   this.DEFAULT_CMD = {
     linux: driverCommand,
     darwin: driverCommand,
-    win32: driverCommand,
+    win32: driverCommand + '.exe',
   };
 
   const port = Math.floor((Math.random() * 1000)) + 4000;
