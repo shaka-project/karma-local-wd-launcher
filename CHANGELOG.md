@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.1](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.3.0...v1.3.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* Make Windows browser version queries more robust ([651c24c](https://github.com/joeyparrish/karma-local-wd-launcher/commit/651c24ce66964ec395ced0166e73c18d22d588f3))
+
 ## [1.3.0](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.5...v1.3.0) (2022-02-03)
 
 
