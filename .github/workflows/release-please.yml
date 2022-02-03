@@ -36,3 +36,4 @@ jobs:
         with:
           name: my-artifact
           path: karma-local-wd-launcher-*.tgz
+        if: ${{ steps.release.outputs.release_created }}
