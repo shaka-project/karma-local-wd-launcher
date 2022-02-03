@@ -2,10 +2,8 @@
 
 ### [1.2.2](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.1...v1.2.2) (2022-02-03)
 
+* Dummy release to test CI changes ([f1fe277](https://github.com/joeyparrish/karma-local-wd-launcher/commit/f1fe277a3ce07024b570475067922683b02e6fb8))
 
-### Miscellaneous Chores
-
-* release v1.2.2 ([f1fe277](https://github.com/joeyparrish/karma-local-wd-launcher/commit/f1fe277a3ce07024b570475067922683b02e6fb8))
 
 ### [1.2.1](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.0...v1.2.1) (2022-02-03)
 
