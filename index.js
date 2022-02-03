@@ -180,6 +180,12 @@ const LocalWebDriverChrome = function(baseBrowserDecorator, logger) {
 
 // TODO: Add Chrome on android?
 
+const LocalWebDriverEdge = function(baseBrowserDecorator, logger) {
+  LocalWebDriverBase.call(this,
+      'Edge', 'msedgedriver', (port) => ['--port=' + port],
+      baseBrowserDecorator, logger);
+};
+
 const LocalWebDriverFirefox = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
       'Firefox', 'geckodriver', (port) => ['-p', port],
@@ -192,14 +198,14 @@ const LocalWebDriverSafari = function(baseBrowserDecorator, logger) {
       baseBrowserDecorator, logger);
 };
 
-// TODO: Add MS Edge
-
 LocalWebDriverChrome.$inject = ['baseBrowserDecorator', 'logger'];
+LocalWebDriverEdge.$inject = ['baseBrowserDecorator', 'logger'];
 LocalWebDriverFirefox.$inject = ['baseBrowserDecorator', 'logger'];
 LocalWebDriverSafari.$inject = ['baseBrowserDecorator', 'logger'];
 
 module.exports = {
   'launcher:Chrome': ['type', LocalWebDriverChrome],
+  'launcher:Edge': ['type', LocalWebDriverEdge],
   'launcher:Firefox': ['type', LocalWebDriverFirefox],
 };
 
