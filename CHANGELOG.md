@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.2.3](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.2...v1.2.3) (2022-02-03)
+
+
+### Bug Fixes
+
+* **ci:** Use an alternate upload action in release workflow ([16cfaed](https://github.com/joeyparrish/karma-local-wd-launcher/commit/16cfaeda550d7a0aa12b2a1f397efb7e3d63cec9))
+
 ### [1.2.2](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.1...v1.2.2) (2022-02-03)
 
 * Dummy release to test CI changes ([f1fe277](https://github.com/joeyparrish/karma-local-wd-launcher/commit/f1fe277a3ce07024b570475067922683b02e6fb8))
