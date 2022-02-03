@@ -34,10 +34,10 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - uses: actions/upload-release-asset@v1
         env:
-          RELEASE_VERSION: ${{ steps.release.outputs.major }}-${{ steps.release.outputs.minor }}-${{ steps.release.outputs.patch }}.tgz
+          RELEASE_VERSION: ${{ steps.release.outputs.major }}-${{ steps.release.outputs.minor }}-${{ steps.release.outputs.patch }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          path: karma-local-wd-launcher-${{ env.RELEASE_VERSION }}.tgz
+          asset_path: karma-local-wd-launcher-${{ env.RELEASE_VERSION }}.tgz
           asset_name: karma-local-wd-launcher-${{ env.RELEASE_VERSION }}.tgz
           asset_content_type: application/gzip
         if: ${{ steps.release.outputs.release_created }}
