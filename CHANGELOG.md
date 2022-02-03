@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.2.1](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.0...v1.2.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* Fix browser name to MSEdge to match Selenium grid ([e72c8ed](https://github.com/joeyparrish/karma-local-wd-launcher/commit/e72c8ed08518214b256a0d325c62f1ef2c38dce8))
+
 ## [1.2.0](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.1.1...v1.2.0) (2022-02-03)
 
 
