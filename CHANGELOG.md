@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.2.4](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.3...v1.2.4) (2022-02-03)
+
+
+### Bug Fixes
+
+* Add small startup delay to fix connection failures ([03918e3](https://github.com/joeyparrish/karma-local-wd-launcher/commit/03918e374b89769ba769f5bc14fe440b3f05a494))
+* Fix Safari startup failures ([73892e9](https://github.com/joeyparrish/karma-local-wd-launcher/commit/73892e97db05545f877a5c91bdfc21f3f65c72a7))
+
 ### [1.2.3](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.2...v1.2.3) (2022-02-03)
 
 
