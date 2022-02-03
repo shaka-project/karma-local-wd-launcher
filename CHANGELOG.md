@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.1.1...v1.2.0) (2022-02-03)
+
+
+### Features
+
+* Add MS Edge support ([08a225e](https://github.com/joeyparrish/karma-local-wd-launcher/commit/08a225ea779f40bc03fe776e87f9bb6a2b110b09))
+
 ## [1.1.1](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.1.0...v1.1.1) (2022-02-02)
 
 
