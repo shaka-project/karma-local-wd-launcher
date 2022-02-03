@@ -39,6 +39,9 @@ const LocalWebDriverBase = function(
     browserName, driverCommand, argsFromPort, baseBrowserDecorator, logger) {
   baseBrowserDecorator(this);
 
+  this.name = `${this.browserName} via WebDriver`;
+  const log = logger.create(this.name);
+
   this.browserName = browserName;
 
   if (driverCommand[0] == '/') {
@@ -47,6 +50,7 @@ const LocalWebDriverBase = function(
     // File name.  Assume it's in our driver cache.
     driverCommand = path.join(DRIVER_CACHE, driverCommand);
   }
+  log.debug(`Default driver command: ${driverCommand}`);
 
   // Checked by the base class to determine what command to run.
   this.DEFAULT_CMD = {
@@ -71,9 +75,6 @@ const LocalWebDriverBase = function(
   };
 
   const webDriver = url.format(config);
-  this.name = `${this.browserName} via WebDriver at ` + webDriver;
-
-  const log = logger.create(this.name);
   log.debug('config:', JSON.stringify(config));
 
   // These names ("browser" and "spec") are needed for compatibility with
