@@ -151,6 +151,23 @@ const LocalWebDriverBase = function(
     originalStart.call(this, url);
   };
 
+  const originalOnProcessExit = this._onProcessExit;
+  this._onProcessExit = (code, signal, errorOutput) => {
+    originalOnProcessExit.call(this, code, signal, errorOutput);
+
+    if (code == -1 && errorOutput.includes('Can not find')) {
+      // Failed to find the driver.  Is it in the cache?  Debug to help the
+      // user find out what's wrong.
+      try {
+        const contents = fs.readdirSync(DRIVER_CACHE);
+        log.error(
+          `Failed to find driver for ${this.browserName}`);
+        log.error(
+          `${DRIVER_CACHE} contains:`, JSON.stringify(contents, null, '  '));
+      } catch (error) {}
+    }
+  };
+
   this.restart = async () => {
     if (this.state == 'BEING_FORCE_KILLED') {
       return;
