@@ -32,12 +32,11 @@ jobs:
       #  if: ${{ steps.release.outputs.release_created }}
       - run: npm pack
         if: ${{ steps.release.outputs.release_created }}
-      - uses: actions/upload-release-asset@v1
-        env:
-          RELEASE_VERSION: ${{ steps.release.outputs.major }}-${{ steps.release.outputs.minor }}-${{ steps.release.outputs.patch }}
+      - uses: svenstaro/upload-release-action@483c1e56f95e88835747b1c7c60581215016cbf2
         with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: karma-local-wd-launcher-${{ env.RELEASE_VERSION }}.tgz
-          asset_name: karma-local-wd-launcher-${{ env.RELEASE_VERSION }}.tgz
-          asset_content_type: application/gzip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.release.outputs.tag_name }}
+          file: karma-local-wd-launcher-*.tgz
+          file_glob: true
+          overwrite: true
         if: ${{ steps.release.outputs.release_created }}
