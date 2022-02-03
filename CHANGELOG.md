@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.2.5](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.4...v1.2.5) (2022-02-03)
+
+
+### Bug Fixes
+
+* Append .exe to driver names on Windows ([c6e512f](https://github.com/joeyparrish/karma-local-wd-launcher/commit/c6e512f1ed80760c7c70eb0f97234857bce70f7a))
+* Fix env variable corruption ([57cd5da](https://github.com/joeyparrish/karma-local-wd-launcher/commit/57cd5da4c42274abfb95078420ed92e6003eeebf))
+
 ### [1.2.4](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.2.3...v1.2.4) (2022-02-03)
 
 
