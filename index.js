@@ -182,7 +182,7 @@ const LocalWebDriverChrome = function(baseBrowserDecorator, logger) {
 
 const LocalWebDriverEdge = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'Edge', 'msedgedriver', (port) => ['--port=' + port],
+      'MSEdge', 'msedgedriver', (port) => ['--port=' + port],
       baseBrowserDecorator, logger);
 };
 
