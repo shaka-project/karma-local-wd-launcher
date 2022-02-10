@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.3.1...v1.4.0) (2022-02-10)
+
+
+### Features
+
+* Support ChromeHeadless, FirefoxHeadless and EdgeHeadless ([#13](https://github.com/joeyparrish/karma-local-wd-launcher/issues/13)) ([b182d2f](https://github.com/joeyparrish/karma-local-wd-launcher/commit/b182d2f0c480a623e176d3c4d3c55ca152bdc9b7)), closes [#12](https://github.com/joeyparrish/karma-local-wd-launcher/issues/12)
+
 ### [1.3.1](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.3.0...v1.3.1) (2022-02-03)
 
 
