@@ -18,7 +18,6 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const url = require('url');
 const wd = require('wd');
 
 const {installWebDrivers} = require('webdriver-installer');
@@ -36,10 +35,10 @@ const PLATFORM_MAP = {
 };
 
 const LocalWebDriverBase = function(
-    browserName, driverCommand, argsFromPort, baseBrowserDecorator, logger) {
+    browserName, name, driverCommand, argsFromPort, baseBrowserDecorator, logger) {
   baseBrowserDecorator(this);
 
-  this.name = `${this.browserName} via WebDriver`;
+  this.name = `${name} via WebDriver`;
   const log = logger.create(this.name);
 
   this.browserName = browserName;
@@ -76,7 +75,6 @@ const LocalWebDriverBase = function(
     pathname: '/'
   };
 
-  const webDriver = url.format(config);
   log.debug('config:', JSON.stringify(config));
 
   // These names ("browser" and "spec") are needed for compatibility with
@@ -197,39 +195,84 @@ const LocalWebDriverBase = function(
 
 const LocalWebDriverChrome = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'Chrome', 'chromedriver', (port) => ['--port=' + port],
+      'Chrome', 'Chrome', 'chromedriver', (port) => ['--port=' + port],
       baseBrowserDecorator, logger);
+};
+
+const LocalWebDriverChromeHeadless = function(baseBrowserDecorator, logger) {
+  LocalWebDriverBase.call(this,
+      'Chrome', 'ChromeHeadless', 'chromedriver', (port) => ['--port=' + port],
+      baseBrowserDecorator, logger);
+
+  this.spec['goog:chromeOptions'] = {
+    args: [
+      '--headless',
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
+    ],
+  };
 };
 
 // TODO: Add Chrome on android?
 
 const LocalWebDriverEdge = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'MSEdge', 'msedgedriver', (port) => ['--port=' + port],
+      'MSEdge', 'MSEdge', 'msedgedriver', (port) => ['--port=' + port],
       baseBrowserDecorator, logger);
+};
+
+const LocalWebDriverEdgeHeadless = function(baseBrowserDecorator, logger) {
+  LocalWebDriverBase.call(this,
+      'MSEdge', 'MSEdgeHeadless', 'msedgedriver', (port) => ['--port=' + port],
+      baseBrowserDecorator, logger);
+
+  this.spec['ms:edgeOptions'] = {
+    args: [
+      '--headless',
+      '--disable-gpu',
+    ],
+  };
 };
 
 const LocalWebDriverFirefox = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'Firefox', 'geckodriver', (port) => ['-p', port],
+      'Firefox', 'Firefox', 'geckodriver', (port) => ['-p', port],
       baseBrowserDecorator, logger);
+};
+
+const LocalWebDriverFirefoxHeadless = function(baseBrowserDecorator, logger) {
+  LocalWebDriverBase.call(this,
+      'Firefox', 'FirefoxHeadless', 'geckodriver', (port) => ['-p', port],
+      baseBrowserDecorator, logger);
+
+  this.spec['moz:firefoxOptions'] = {
+    args: [
+      '-headless',
+    ],
+  };
 };
 
 const LocalWebDriverSafari = function(baseBrowserDecorator, logger) {
   LocalWebDriverBase.call(this,
-      'Safari', '/usr/bin/safaridriver', (port) => ['-p', port],
+      'Safari', 'Safari', '/usr/bin/safaridriver', (port) => ['-p', port],
       baseBrowserDecorator, logger);
 };
 
 LocalWebDriverChrome.$inject = ['baseBrowserDecorator', 'logger'];
+LocalWebDriverChromeHeadless.$inject = ['baseBrowserDecorator', 'logger'];
 LocalWebDriverEdge.$inject = ['baseBrowserDecorator', 'logger'];
+LocalWebDriverEdgeHeadless.$inject = ['baseBrowserDecorator', 'logger'];
 LocalWebDriverFirefox.$inject = ['baseBrowserDecorator', 'logger'];
+LocalWebDriverFirefoxHeadless.$inject = ['baseBrowserDecorator', 'logger'];
 LocalWebDriverSafari.$inject = ['baseBrowserDecorator', 'logger'];
 
 module.exports = {
   'launcher:Chrome': ['type', LocalWebDriverChrome],
+  'launcher:ChromeHeadless': ['type', LocalWebDriverChromeHeadless],
   'launcher:Edge': ['type', LocalWebDriverEdge],
+  'launcher:EdgeHeadless': ['type', LocalWebDriverEdgeHeadless],
   'launcher:Firefox': ['type', LocalWebDriverFirefox],
+  'launcher:FirefoxHeadless': ['type', LocalWebDriverFirefoxHeadless],
 };
 
 // Safari is only supported on Mac.
