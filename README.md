@@ -46,3 +46,4 @@ You can give Karma's command-line interface a list of browsers, too:
 ```sh
 karma start --browsers Chrome Firefox Safari
 ```
+
