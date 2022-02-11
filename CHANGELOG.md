@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.1](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.4.0...v1.4.1) (2022-02-11)
+
+
+### Bug Fixes
+
+* **deps:** Choose platform-specific msedgedriver version ([#19](https://github.com/joeyparrish/karma-local-wd-launcher/issues/19)) ([5e78a49](https://github.com/joeyparrish/karma-local-wd-launcher/commit/5e78a490a8742a7c479452c0a77304b1d290a767))
+
 ## [1.4.0](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.3.1...v1.4.0) (2022-02-10)
 
 
