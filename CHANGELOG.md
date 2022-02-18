@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.2](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.4.1...v1.4.2) (2022-02-18)
+
+
+### Bug Fixes
+
+* Fix unlinking existing binaries ([#25](https://github.com/joeyparrish/karma-local-wd-launcher/issues/25)) ([cd8a561](https://github.com/joeyparrish/karma-local-wd-launcher/commit/cd8a56173ba6e0c42d6c61eb38ea7d35848b7c3e))
+
 ### [1.4.1](https://github.com/joeyparrish/karma-local-wd-launcher/compare/v1.4.0...v1.4.1) (2022-02-11)
 
 
