@@ -34,39 +34,23 @@ const PLATFORM_MAP = {
   'linux': 'Linux',
 };
 
-const LocalWebDriverBase = function(
-    browserName, name, driverCommand, argsFromPort, baseBrowserDecorator, logger) {
+// Subclasses must define these static members:
+//  - BROWSER_NAME: browser name as presented to WebDriver
+//  - LAUNCHER_NAME: launcher name as presented to Karma
+//  - EXTRA_WEBDRIVER_SPECS: an object containing any extra WebDriver specs
+//  - getDriverArgs(port): take port as string, return driver command arguments
+const LocalWebDriverBase = function(baseBrowserDecorator, logger) {
   baseBrowserDecorator(this);
 
-  this.name = `${name} via WebDriver`;
+  this.name = `${this.constructor.LAUNCHER_NAME} via WebDriver`;
   const log = logger.create(this.name);
 
-  this.browserName = browserName;
-
-  // An environment variable that can be used to override the command path.
-  // Must be computed before the cache path is prepended to the driverCommand.
-  this.ENV_CMD = driverCommand.toUpperCase().replace('-', '_') + '_PATH';
-
-  if (driverCommand[0] == '/') {
-    // Absolute path.  Keep it.
-  } else {
-    // File name.  Assume it's in our driver cache.
-    driverCommand = path.join(DRIVER_CACHE, driverCommand);
-  }
-
-  log.debug(`Default driver command: ${driverCommand}`);
-
-  // Checked by the base class to determine what command to run.
-  this.DEFAULT_CMD = {
-    linux: driverCommand,
-    darwin: driverCommand,
-    win32: driverCommand + '.exe',
-  };
+  this.browserName = this.constructor.BROWSER_NAME;
 
   const port = Math.floor((Math.random() * 1000)) + 4000;
 
   // Called by the base class to get arguments to pass to the driver command.
-  this._getOptions = () => argsFromPort(port.toString());
+  this._getOptions = () => this.constructor.getDriverArgs(port.toString());
 
   const config = {
     protocol: 'http:',
@@ -85,6 +69,8 @@ const LocalWebDriverBase = function(
     platform: PLATFORM_MAP[os.platform()],
     // This is necessary for safaridriver:
     allowW3C: true,
+    // This allows extra configuration for headless variants:
+    ...this.constructor.EXTRA_WEBDRIVER_SPECS,
   };
 
   this.browser.on('status', (info) => {
@@ -193,78 +179,107 @@ const LocalWebDriverBase = function(
   };
 }
 
-const LocalWebDriverChrome = function(baseBrowserDecorator, logger) {
-  LocalWebDriverBase.call(this,
-      'Chrome', 'Chrome', 'chromedriver', (port) => ['--port=' + port],
-      baseBrowserDecorator, logger);
-};
+// Generate a subclass of LocalWebDriverBase and return it.
+function generateSubclass(
+    browserName, launcherName, driverCommand, getDriverArgs,
+    extraWebDriverSpecs={}) {
+  if (driverCommand[0] == '/') {
+    // Absolute path.  Keep it.
+  } else {
+    // File name.  Assume it will be found in our driver cache.
+    driverCommand = path.join(DRIVER_CACHE, driverCommand);
+  }
 
-const LocalWebDriverChromeHeadless = function(baseBrowserDecorator, logger) {
-  LocalWebDriverBase.call(this,
-      'Chrome', 'ChromeHeadless', 'chromedriver', (port) => ['--port=' + port],
-      baseBrowserDecorator, logger);
-
-  this.spec['goog:chromeOptions'] = {
-    args: [
-      '--headless',
-      '--disable-gpu',
-      '--disable-dev-shm-usage',
-    ],
+  // Karma will not use "new" to construct our class, so it can't be a true ES6
+  // class.  Use the old function syntax instead.
+  const subclass = function(baseBrowserDecorator, logger) {
+    LocalWebDriverBase.call(this, baseBrowserDecorator, logger);
   };
-};
+
+  // These are needed by our base class, LocalWebDriverBase.
+  subclass.BROWSER_NAME = browserName;
+  subclass.LAUNCHER_NAME = launcherName;
+  subclass.EXTRA_WEBDRIVER_SPECS = extraWebDriverSpecs;
+  subclass.getDriverArgs = getDriverArgs;
+
+  // These are needed by Karma's base class for command-based launchers, and
+  // will also facilitate auto-detection of available browsers by Shaka Player:
+  const anyPathSeparator = /[\/\\]/;  // Windows (backslash) or POSIX (slash)
+  const driverCommandName = driverCommand.split(anyPathSeparator).pop();
+  subclass.prototype.ENV_CMD =
+      driverCommandName.toUpperCase().replace('-', '_') + '_PATH';
+  subclass.prototype.DEFAULT_CMD = {
+    linux: driverCommand,
+    darwin: driverCommand,
+    win32: driverCommand + '.exe',
+  };
+
+  // This configures Karma's dependency injection system:
+  subclass.$inject = ['baseBrowserDecorator', 'logger'];
+
+  return subclass;
+}
+
+const LocalWebDriverChrome = generateSubclass(
+    'Chrome', 'Chrome',
+    'chromedriver',
+    (port) => ['--port=' + port]);
+
+const LocalWebDriverChromeHeadless = generateSubclass(
+    'Chrome', 'ChromeHeadless',
+    'chromedriver',
+    (port) => ['--port=' + port],
+    {
+      'goog:chromeOptions': {
+        args: [
+          '--headless',
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+        ],
+      },
+    });
 
 // TODO: Add Chrome on android?
 
-const LocalWebDriverEdge = function(baseBrowserDecorator, logger) {
-  LocalWebDriverBase.call(this,
-      'MSEdge', 'MSEdge', 'msedgedriver', (port) => ['--port=' + port],
-      baseBrowserDecorator, logger);
-};
+const LocalWebDriverEdge = generateSubclass(
+    'MSEdge', 'MSEdge',
+    'msedgedriver',
+    (port) => ['--port=' + port]);
 
-const LocalWebDriverEdgeHeadless = function(baseBrowserDecorator, logger) {
-  LocalWebDriverBase.call(this,
-      'MSEdge', 'MSEdgeHeadless', 'msedgedriver', (port) => ['--port=' + port],
-      baseBrowserDecorator, logger);
+const LocalWebDriverEdgeHeadless = generateSubclass(
+    'MSEdge', 'MSEdgeHeadless',
+    'msedgedriver',
+    (port) => ['--port=' + port],
+    {
+      'ms:edgeOptions': {
+        args: [
+          '--headless',
+          '--disable-gpu',
+        ],
+      },
+    });
 
-  this.spec['ms:edgeOptions'] = {
-    args: [
-      '--headless',
-      '--disable-gpu',
-    ],
-  };
-};
+const LocalWebDriverFirefox = generateSubclass(
+    'Firefox', 'Firefox',
+    'geckodriver',
+    (port) => ['-p', port]);
 
-const LocalWebDriverFirefox = function(baseBrowserDecorator, logger) {
-  LocalWebDriverBase.call(this,
-      'Firefox', 'Firefox', 'geckodriver', (port) => ['-p', port],
-      baseBrowserDecorator, logger);
-};
+const LocalWebDriverFirefoxHeadless = generateSubclass(
+    'Firefox', 'FirefoxHeadless',
+    'geckodriver',
+    (port) => ['-p', port],
+    {
+      'moz:firefoxOptions': {
+        args: [
+          '-headless',
+        ],
+      },
+    });
 
-const LocalWebDriverFirefoxHeadless = function(baseBrowserDecorator, logger) {
-  LocalWebDriverBase.call(this,
-      'Firefox', 'FirefoxHeadless', 'geckodriver', (port) => ['-p', port],
-      baseBrowserDecorator, logger);
-
-  this.spec['moz:firefoxOptions'] = {
-    args: [
-      '-headless',
-    ],
-  };
-};
-
-const LocalWebDriverSafari = function(baseBrowserDecorator, logger) {
-  LocalWebDriverBase.call(this,
-      'Safari', 'Safari', '/usr/bin/safaridriver', (port) => ['-p', port],
-      baseBrowserDecorator, logger);
-};
-
-LocalWebDriverChrome.$inject = ['baseBrowserDecorator', 'logger'];
-LocalWebDriverChromeHeadless.$inject = ['baseBrowserDecorator', 'logger'];
-LocalWebDriverEdge.$inject = ['baseBrowserDecorator', 'logger'];
-LocalWebDriverEdgeHeadless.$inject = ['baseBrowserDecorator', 'logger'];
-LocalWebDriverFirefox.$inject = ['baseBrowserDecorator', 'logger'];
-LocalWebDriverFirefoxHeadless.$inject = ['baseBrowserDecorator', 'logger'];
-LocalWebDriverSafari.$inject = ['baseBrowserDecorator', 'logger'];
+const LocalWebDriverSafari = generateSubclass(
+    'Safari', 'Safari',
+    '/usr/bin/safaridriver',
+    (port) => ['-p', port]);
 
 module.exports = {
   'launcher:Chrome': ['type', LocalWebDriverChrome],
