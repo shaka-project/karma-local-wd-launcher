@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joeyparrish/karma-local-wd-launcher"
+    "url": "https://github.com/shaka-project/karma-local-wd-launcher"
   },
   "keywords": [
     "karma-plugin",
