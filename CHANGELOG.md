@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.3](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.4.2...v1.4.3) (2022-02-28)
+
+
+### Bug Fixes
+
+* Fix compatibility, browser launcher detection in shaka-player ([#29](https://github.com/shaka-project/karma-local-wd-launcher/issues/29)) ([9783318](https://github.com/shaka-project/karma-local-wd-launcher/commit/978331821148bcf25e1be7c60ca16460ac40eeeb)), closes [#23](https://github.com/shaka-project/karma-local-wd-launcher/issues/23)
+
 ### [1.4.2](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.4.1...v1.4.2) (2022-02-18)
 
 
