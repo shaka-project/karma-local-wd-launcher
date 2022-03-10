@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.4.3...v1.5.0) (2022-03-10)
+
+
+### Features
+
+* Add Safari Technology Preview, iOS and iPadOS with simulators ([#33](https://github.com/shaka-project/karma-local-wd-launcher/issues/33)) ([3af8414](https://github.com/shaka-project/karma-local-wd-launcher/commit/3af8414ae37f93751b2090a98801f75b153d95e0))
+
 ### [1.4.3](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.4.2...v1.4.3) (2022-02-28)
 
 
