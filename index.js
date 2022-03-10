@@ -220,6 +220,18 @@ function generateSubclass(
   return subclass;
 }
 
+function generateSafariDriver(name, device = 'mac', simulator = false) {
+  const config = device == 'mac' ? {} : {
+    platformName: 'iOS',
+    'safari:deviceType': device,
+    'safari:useSimulator': simulator,
+  };
+  return generateSubclass('Safari', name,
+      '/usr/bin/safaridriver',
+      (port) => ['--port=' + port],
+      config);
+}
+
 const LocalWebDriverChrome = generateSubclass(
     'Chrome', 'Chrome',
     'chromedriver',
@@ -276,9 +288,19 @@ const LocalWebDriverFirefoxHeadless = generateSubclass(
       },
     });
 
-const LocalWebDriverSafari = generateSubclass(
-    'Safari', 'Safari',
-    '/usr/bin/safaridriver',
+const LocalWebDriverSafari = generateSafariDriver('Safari');
+
+const LocalWebDriverSafariIOS = generateSafariDriver('SafariIOS', 'iPhone');
+const LocalWebDriverSafariIOSSim =
+    generateSafariDriver('SafariIOSSim', 'iPhone', true);
+const LocalWebDriverSafariIPadOS =
+    generateSafariDriver('SafariIPadOS', 'iPad');
+const LocalWebDriverSafariIPadOSSim =
+    generateSafariDriver('SafariIPadOSSim', 'iPad', true);
+
+const LocalWebDriverSafariTP = generateSubclass(
+    'Safari Technology Preview', 'Safari Technology Preview',
+    '/Applications/Safari Technology Preview.app/Contents/MacOS/safaridriver',
     (port) => ['-p', port]);
 
 module.exports = {
@@ -293,4 +315,12 @@ module.exports = {
 // Safari is only supported on Mac.
 if (os.platform() == 'darwin') {
   module.exports['launcher:Safari'] = ['type', LocalWebDriverSafari];
+  module.exports['launcher:SafariIOS'] = ['type', LocalWebDriverSafariIOS];
+  module.exports['launcher:SafariIOSSim'] =
+      ['type', LocalWebDriverSafariIOSSim];
+  module.exports['launcher:SafariIPadOS'] =
+      ['type', LocalWebDriverSafariIPadOS];
+  module.exports['launcher:SafariIPadOSSim'] =
+      ['type', LocalWebDriverSafariIPadOSSim];
+  module.exports['launcher:SafariTP'] = ['type', LocalWebDriverSafariTP];
 }
