@@ -19,6 +19,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const wd = require('wd');
+const _ = require('lodash');
 
 const {installWebDrivers} = require('webdriver-installer');
 
@@ -39,7 +40,7 @@ const PLATFORM_MAP = {
 //  - LAUNCHER_NAME: launcher name as presented to Karma
 //  - EXTRA_WEBDRIVER_SPECS: an object containing any extra WebDriver specs
 //  - getDriverArgs(port): take port as string, return driver command arguments
-const LocalWebDriverBase = function(baseBrowserDecorator, logger) {
+const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
   baseBrowserDecorator(this);
 
   this.name = `${this.constructor.LAUNCHER_NAME} via WebDriver`;
@@ -61,6 +62,10 @@ const LocalWebDriverBase = function(baseBrowserDecorator, logger) {
 
   log.debug('config:', JSON.stringify(config));
 
+  const extraSpecs =
+      _.merge(this.constructor.EXTRA_WEBDRIVER_SPECS, args.config);
+  log.debug('extraSpecs:', extraSpecs);
+
   // These names ("browser" and "spec") are needed for compatibility with
   // karma-webdriver-launcher.
   this.browser = wd.remote(config);
@@ -70,7 +75,7 @@ const LocalWebDriverBase = function(baseBrowserDecorator, logger) {
     // This is necessary for safaridriver:
     allowW3C: true,
     // This allows extra configuration for headless variants:
-    ...this.constructor.EXTRA_WEBDRIVER_SPECS,
+    ...extraSpecs,
   };
 
   this.browser.on('status', (info) => {
@@ -192,8 +197,8 @@ function generateSubclass(
 
   // Karma will not use "new" to construct our class, so it can't be a true ES6
   // class.  Use the old function syntax instead.
-  const subclass = function(baseBrowserDecorator, logger) {
-    LocalWebDriverBase.call(this, baseBrowserDecorator, logger);
+  const subclass = function(baseBrowserDecorator, args, logger) {
+    LocalWebDriverBase.call(this, baseBrowserDecorator, args, logger);
   };
 
   // These are needed by our base class, LocalWebDriverBase.
@@ -215,7 +220,7 @@ function generateSubclass(
   };
 
   // This configures Karma's dependency injection system:
-  subclass.$inject = ['baseBrowserDecorator', 'logger'];
+  subclass.$inject = ['baseBrowserDecorator', 'args', 'logger'];
 
   return subclass;
 }
@@ -274,7 +279,15 @@ const LocalWebDriverEdgeHeadless = generateSubclass(
 const LocalWebDriverFirefox = generateSubclass(
     'Firefox', 'Firefox',
     'geckodriver',
-    (port) => ['-p', port]);
+    (port) => ['-p', port],
+    {
+      'moz:firefoxOptions': {
+        prefs: {
+          'media.eme.enabled': true,
+          'media.gmp-manager.updateEnabled': true,
+        },
+      },
+    });
 
 const LocalWebDriverFirefoxHeadless = generateSubclass(
     'Firefox', 'FirefoxHeadless',
@@ -282,6 +295,10 @@ const LocalWebDriverFirefoxHeadless = generateSubclass(
     (port) => ['-p', port],
     {
       'moz:firefoxOptions': {
+        prefs: {
+          'media.eme.enabled': true,
+          'media.gmp-manager.updateEnabled': true,
+        },
         args: [
           '-headless',
         ],
