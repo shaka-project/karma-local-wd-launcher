@@ -279,7 +279,15 @@ const LocalWebDriverEdgeHeadless = generateSubclass(
 const LocalWebDriverFirefox = generateSubclass(
     'Firefox', 'Firefox',
     'geckodriver',
-    (port) => ['-p', port]);
+    (port) => ['-p', port],
+    {
+      'moz:firefoxOptions': {
+        prefs: {
+          'media.eme.enabled': true,
+          'media.gmp-manager.updateEnabled': true,
+        },
+      },
+    });
 
 const LocalWebDriverFirefoxHeadless = generateSubclass(
     'Firefox', 'FirefoxHeadless',
@@ -287,6 +295,10 @@ const LocalWebDriverFirefoxHeadless = generateSubclass(
     (port) => ['-p', port],
     {
       'moz:firefoxOptions': {
+        prefs: {
+          'media.eme.enabled': true,
+          'media.gmp-manager.updateEnabled': true,
+        },
         args: [
           '-headless',
         ],
