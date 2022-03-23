@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.5.0...v1.6.0) (2022-03-23)
+
+
+### Features
+
+* Customize WebDriver config in custom launcher ([#35](https://github.com/shaka-project/karma-local-wd-launcher/issues/35)) ([c8fe569](https://github.com/shaka-project/karma-local-wd-launcher/commit/c8fe5696c87b8166c802945c3f2dec6ee67b5cee))
+
 ## [1.5.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.4.3...v1.5.0) (2022-03-10)
 
 
