@@ -26,6 +26,9 @@ const {installWebDrivers} = require('webdriver-installer');
 const DRIVER_CACHE = path.join(os.homedir(), '.webdriver-installer-cache');
 fs.mkdirSync(DRIVER_CACHE, {recursive: true});
 
+// If it takes longer than this to close our WebDriver session, give up.
+const CLOSE_WEBDRIVER_SESSION_TIMEOUT_SECONDS = 5;
+
 let driversInstalledPromise = null;
 
 // Map nodejs OS names to Selenium platform names.
@@ -91,7 +94,7 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
   });
 
   this.on('start', async (url) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await delay(2 /* seconds */);
 
     this.browser.init(this.spec, (error) => {
       if (error) {
@@ -116,9 +119,18 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
     await this.stopWebdriver_();
   };
 
+  this.forceKillOperation_ = null;
+
   this.forceKill = async () => {
+    // Don't nest force-kill operations.  If forceKill() was already called,
+    // just return the same Promise again.
+    if (this.state == 'BEING_FORCE_KILLED') {
+      return this.forceKillOperation_;
+    }
+
     this.state = 'BEING_FORCE_KILLED';
-    await this.stopWebdriver_();
+    this.forceKillOperation_ = this.stopWebdriver_();
+    await this.forceKillOperation_;
   };
 
   const originalStart = this.start;
@@ -173,15 +185,23 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
 
   this.stopWebdriver_ = async () => {
     if (this.browser) {
-      await new Promise(resolve => this.browser.quit(resolve));
+      // If it takes too long to close the session, give up and move on.
+      await Promise.race([
+        delay(CLOSE_WEBDRIVER_SESSION_TIMEOUT_SECONDS),
+        new Promise(resolve => this.browser.quit(resolve)),
+      ]);
     }
 
-    // Now that the driver connection and browser are closed, emit the signal
-    // that shuts down the driver executable.
+    // Now that the driver connection and browser are closed (or have timed
+    // out), emit the signal that shuts down the driver executable.
     await this.emitAsync('kill');
 
     this.state = 'FINISHED';
   };
+}
+
+async function delay(seconds) {
+  await new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
 
 // Generate a subclass of LocalWebDriverBase and return it.
