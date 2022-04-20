@@ -26,6 +26,9 @@ const {installWebDrivers} = require('webdriver-installer');
 const DRIVER_CACHE = path.join(os.homedir(), '.webdriver-installer-cache');
 fs.mkdirSync(DRIVER_CACHE, {recursive: true});
 
+// Delay on startup to allow the WebDriver server to start.
+const WEBDRIVER_STARTUP_DELAY_SECONDS = 2;
+
 // If it takes longer than this to close our WebDriver session, give up.
 const CLOSE_WEBDRIVER_SESSION_TIMEOUT_SECONDS = 5;
 
@@ -94,7 +97,7 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
   });
 
   this.on('start', async (url) => {
-    await delay(2 /* seconds */);
+    await delay(WEBDRIVER_STARTUP_DELAY_SECONDS);
 
     this.browser.init(this.spec, (error) => {
       if (error) {
