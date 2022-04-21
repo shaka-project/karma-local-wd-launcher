@@ -17,6 +17,7 @@
   ],
   "author": "Joey Parrish <joeyparrish@google.com>",
   "dependencies": {
+    "lodash": "^4.17.21",
     "wd": "^1.14.0",
     "webdriver-installer": "^1.1.4"
   },
