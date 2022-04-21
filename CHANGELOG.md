@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.6.1](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.0...v1.6.1) (2022-04-21)
+
+
+### Bug Fixes
+
+* Fix hung launcher on shutdown of Safari ([#38](https://github.com/shaka-project/karma-local-wd-launcher/issues/38)) ([adc7898](https://github.com/shaka-project/karma-local-wd-launcher/commit/adc7898f50d7b57664b8f56734ec9730228e31a9)), closes [#24](https://github.com/shaka-project/karma-local-wd-launcher/issues/24)
+* Fix missing lodash dependency ([#39](https://github.com/shaka-project/karma-local-wd-launcher/issues/39)) ([cc3f4c0](https://github.com/shaka-project/karma-local-wd-launcher/commit/cc3f4c022f0e1060715674c8fb19de208cccfd8e))
+
 ## [1.6.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.5.0...v1.6.0) (2022-03-23)
 
 
