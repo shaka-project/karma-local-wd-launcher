@@ -68,8 +68,9 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
 
   log.debug('config:', JSON.stringify(config));
 
-  const extraSpecs =
-      _.mergeWith(this.constructor.EXTRA_WEBDRIVER_SPECS, args.config,
+  const extraSpecs = _.mergeWith(
+      this.constructor.EXTRA_WEBDRIVER_SPECS,
+      args.config,
       (objValue, srcValue) => {
         if (Array.isArray(objValue)) {
           return objValue.concat(srcValue);
