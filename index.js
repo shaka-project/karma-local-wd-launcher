@@ -69,7 +69,12 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
   log.debug('config:', JSON.stringify(config));
 
   const extraSpecs =
-      _.merge(this.constructor.EXTRA_WEBDRIVER_SPECS, args.config);
+      _.mergeWith(this.constructor.EXTRA_WEBDRIVER_SPECS, args.config,
+      (objValue, srcValue) => {
+        if (Array.isArray(objValue)) {
+          return objValue.concat(srcValue);
+        }
+      });
   log.debug('extraSpecs:', extraSpecs);
 
   // These names ("browser" and "spec") are needed for compatibility with
@@ -273,6 +278,7 @@ const LocalWebDriverChromeHeadless = generateSubclass(
       'goog:chromeOptions': {
         args: [
           '--headless',
+          '--no-sandbox',
           '--disable-gpu',
           '--disable-dev-shm-usage',
         ],
