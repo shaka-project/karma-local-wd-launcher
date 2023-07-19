@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.2](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.1...v1.6.2) (2023-07-19)
+
+
+### Bug Fixes
+
+* Fix ChromeHeadless in Docker ([#51](https://github.com/shaka-project/karma-local-wd-launcher/issues/51)) ([a487e6d](https://github.com/shaka-project/karma-local-wd-launcher/commit/a487e6de37ebeac009e17619a5e48aa2e439e9d0))
+* Fix clobbering of arguments in custom configurations ([#50](https://github.com/shaka-project/karma-local-wd-launcher/issues/50)) ([43ce270](https://github.com/shaka-project/karma-local-wd-launcher/commit/43ce27057eb0b86b5659f8eb49a50e1752d33d4a))
+* Fix failure when drivers lag behind browser ([#53](https://github.com/shaka-project/karma-local-wd-launcher/issues/53)) ([14cf6c3](https://github.com/shaka-project/karma-local-wd-launcher/commit/14cf6c3ff1f4fcf62518590a246e355ed6c882de))
+
 ### [1.6.1](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.0...v1.6.1) (2022-04-21)
 
 
