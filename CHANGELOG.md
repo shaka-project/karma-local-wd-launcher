@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.3](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.2...v1.6.3) (2023-08-17)
+
+
+### Bug Fixes
+
+* Update webdriver-installer to fix Chromedriver &gt;= 115, fix M1 mac ([#55](https://github.com/shaka-project/karma-local-wd-launcher/issues/55)) ([7fc6bdc](https://github.com/shaka-project/karma-local-wd-launcher/commit/7fc6bdc45c89064268adf9919c3872c3cbe9a509))
+
 ## [1.6.2](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.1...v1.6.2) (2023-07-19)
 
 
