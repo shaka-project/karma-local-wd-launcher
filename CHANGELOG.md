@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.4](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.3...v1.6.4) (2023-08-18)
+
+
+### Bug Fixes
+
+* Update webdriver-installer to fix Edge &gt;= 115 ([#57](https://github.com/shaka-project/karma-local-wd-launcher/issues/57)) ([e39448c](https://github.com/shaka-project/karma-local-wd-launcher/commit/e39448cce285f2cc28ce3793f3b003cf6d83dd22))
+
 ## [1.6.3](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.2...v1.6.3) (2023-08-17)
 
 
