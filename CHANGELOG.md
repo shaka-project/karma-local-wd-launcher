@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.5](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.4...v1.6.5) (2023-09-07)
+
+
+### Bug Fixes
+
+* Work around msedgedriver 115+ bug ([#60](https://github.com/shaka-project/karma-local-wd-launcher/issues/60)) ([56a6688](https://github.com/shaka-project/karma-local-wd-launcher/commit/56a6688ae77acd2cb8ee89459a48950daa289eff))
+
 ## [1.6.4](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.3...v1.6.4) (2023-08-18)
 
 
