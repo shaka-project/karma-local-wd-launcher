@@ -19,6 +19,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const wd = require('wd');
+const which = require('which');
 const _ = require('lodash');
 
 const {installWebDrivers} = require('webdriver-installer');
@@ -40,6 +41,18 @@ const PLATFORM_MAP = {
   'win32': 'Windows',
   'linux': 'Linux',
 };
+
+function mergeOptions(base, custom) {
+  // _.mergeWith modifies the first argument, so clone the base structure first.
+  const output = _.cloneDeep(base);
+  return _.mergeWith(output, custom,
+      // Concatenate arrays instead of overwriting them.
+      (objValue, srcValue) => {
+        if (Array.isArray(objValue)) {
+          return objValue.concat(srcValue);
+        }
+      });
+}
 
 // Subclasses must define these static members:
 //  - BROWSER_NAME: browser name as presented to WebDriver
@@ -68,14 +81,9 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
 
   log.debug('config:', JSON.stringify(config));
 
-  const extraSpecs = _.mergeWith(
+  const extraSpecs = mergeOptions(
       this.constructor.EXTRA_WEBDRIVER_SPECS,
-      args.config,
-      (objValue, srcValue) => {
-        if (Array.isArray(objValue)) {
-          return objValue.concat(srcValue);
-        }
-      });
+      args.config);
   log.debug('extraSpecs:', extraSpecs);
 
   // These names ("browser" and "spec") are needed for compatibility with
@@ -288,23 +296,35 @@ const LocalWebDriverChromeHeadless = generateSubclass(
 
 // TODO: Add Chrome on android?
 
+// If a binary is found with the name "microsoft-edge" in the PATH, specify
+// that explicitly.  This works around the following edgedriver bug:
+// https://github.com/MicrosoftEdge/EdgeWebDriver/issues/102#issuecomment-1710724173
+const edgeOptions = {};
+const edgeBinary = which.sync('microsoft-edge');
+if (edgeBinary) {
+  edgeOptions['ms:edgeOptions'] = {
+    binary: edgeBinary,
+  };
+}
+
 const LocalWebDriverEdge = generateSubclass(
     'MSEdge', 'MSEdge',
     'msedgedriver',
-    (port) => ['--port=' + port]);
+    (port) => ['--port=' + port],
+    edgeOptions);
 
 const LocalWebDriverEdgeHeadless = generateSubclass(
     'MSEdge', 'MSEdgeHeadless',
     'msedgedriver',
     (port) => ['--port=' + port],
-    {
+    mergeOptions(edgeOptions, {
       'ms:edgeOptions': {
         args: [
           '--headless',
           '--disable-gpu',
         ],
       },
-    });
+    }));
 
 const LocalWebDriverFirefox = generateSubclass(
     'Firefox', 'Firefox',
