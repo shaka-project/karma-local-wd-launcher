@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.6](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.5...v1.6.6) (2023-09-08)
+
+
+### Bug Fixes
+
+* Fix exception thrown when Edge executable is not found ([#62](https://github.com/shaka-project/karma-local-wd-launcher/issues/62)) ([fd3ff72](https://github.com/shaka-project/karma-local-wd-launcher/commit/fd3ff7207554411f84ff5bc5e1ac357627b172f1))
+
 ## [1.6.5](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.4...v1.6.5) (2023-09-07)
 
 
