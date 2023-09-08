@@ -300,7 +300,7 @@ const LocalWebDriverChromeHeadless = generateSubclass(
 // that explicitly.  This works around the following edgedriver bug:
 // https://github.com/MicrosoftEdge/EdgeWebDriver/issues/102#issuecomment-1710724173
 const edgeOptions = {};
-const edgeBinary = which.sync('microsoft-edge');
+const edgeBinary = which.sync('microsoft-edge', {nothrow: true});
 if (edgeBinary) {
   edgeOptions['ms:edgeOptions'] = {
     binary: edgeBinary,

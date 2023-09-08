@@ -18,9 +18,9 @@
   "author": "Joey Parrish <joeyparrish@google.com>",
   "dependencies": {
     "lodash": "^4.17.21",
-    "node-which": "^1.0.0",
     "wd": "^1.14.0",
-    "webdriver-installer": "^1.1.9"
+    "webdriver-installer": "^1.1.9",
+    "which": "^4.0.0"
   },
   "peerDependencies": {
     "karma": "^6.2.0"
