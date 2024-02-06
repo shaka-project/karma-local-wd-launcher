@@ -300,7 +300,30 @@ const LocalWebDriverChromeHeadless = generateSubclass(
 // that explicitly.  This works around the following edgedriver bug:
 // https://github.com/MicrosoftEdge/EdgeWebDriver/issues/102#issuecomment-1710724173
 const edgeOptions = {};
-const edgeBinary = which.sync('microsoft-edge', {nothrow: true});
+let edgeBinary = which.sync('microsoft-edge', {nothrow: true});
+
+if (!edgeBinary) {
+  // Since v120 or v121, msedgedriver always fails if you do not specify the
+  // Edge binary path.  Assume some platform-specific defaults.  Only use these
+  // paths if they exist.
+  switch (os.platform()) {
+    case 'darwin':
+      edgeBinary = '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge';
+      break;
+    case 'win32':
+      edgeBinary = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+      break;
+    case 'linux':
+      edgeBinary = '/opt/microsoft/msedge/microsoft-edge';
+      break;
+  }
+
+  // If that platform-specific binary doesn't exist, don't try to use it.
+  if (edgeBinary && !fs.existsSync(edgeBinary)) {
+    edgeBinary = null;
+  }
+}
+
 if (edgeBinary) {
   edgeOptions['ms:edgeOptions'] = {
     binary: edgeBinary,
