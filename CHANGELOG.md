@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.7](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.6...v1.6.7) (2024-02-06)
+
+
+### Bug Fixes
+
+* Pick a default Edge binary location on all platforms ([#65](https://github.com/shaka-project/karma-local-wd-launcher/issues/65)) ([17069e7](https://github.com/shaka-project/karma-local-wd-launcher/commit/17069e78e612f3037509b95889d7e2563c781225))
+
 ## [1.6.6](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.5...v1.6.6) (2023-09-08)
 
 
