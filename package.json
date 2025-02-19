@@ -1,6 +1,6 @@
 {
   "name": "karma-local-wd-launcher",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "Karma Local WebDriver Launcher - Launches local web browsers using WebDriver, to enable screenshots and other advanced tests to be executed in-browser.",
   "main": "index.js",
   "repository": {

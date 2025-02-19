@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.8](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.7...v1.6.8) (2025-02-19)
+
+
+### Bug Fixes
+
+* Log webdrivers installation in debug mode ([#84](https://github.com/shaka-project/karma-local-wd-launcher/issues/84)) ([375fce9](https://github.com/shaka-project/karma-local-wd-launcher/commit/375fce9340545c2334a1320ec789739e491122b6))
+
 ## [1.6.7](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.6...v1.6.7) (2024-02-06)
 
 
