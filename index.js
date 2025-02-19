@@ -157,9 +157,8 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
     // If we haven't installed drivers yet in this session, start the
     // installation process now.
     if (!driversInstalledPromise) {
-      // TODO: Tie logging for this to karma log settings.
       driversInstalledPromise =
-          installWebDrivers(DRIVER_CACHE, /* logging= */ false);
+          installWebDrivers(DRIVER_CACHE, /* logging= */ log.level == 'DEBUG');
     }
 
     // Wait for drivers to be installed for all local browsers.
