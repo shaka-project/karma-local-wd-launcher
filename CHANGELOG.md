@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.9](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.8...v1.6.9) (2025-02-20)
+
+
+### Bug Fixes
+
+* Improve error resiliency of drivers installation ([#86](https://github.com/shaka-project/karma-local-wd-launcher/issues/86)) ([6b5bf14](https://github.com/shaka-project/karma-local-wd-launcher/commit/6b5bf14be0ed07a53f3560772890c5b1b253830a))
+
 ## [1.6.8](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.7...v1.6.8) (2025-02-19)
 
 
