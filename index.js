@@ -162,7 +162,11 @@ const LocalWebDriverBase = function(baseBrowserDecorator, args, logger) {
     }
 
     // Wait for drivers to be installed for all local browsers.
-    await driversInstalledPromise;
+    try {
+      await driversInstalledPromise;
+    } catch (e) {
+      log.error('Failed to install drivers:', e);
+    }
 
     previousUrl = url;
     originalStart.call(this, url);
