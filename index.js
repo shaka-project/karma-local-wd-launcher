@@ -361,6 +361,8 @@ const LocalWebDriverFirefox = generateSubclass(
         prefs: {
           'media.eme.enabled': true,
           'media.gmp-manager.updateEnabled': true,
+          'media.gmp-widevinecdm.enabled': true,
+          'media.gmp-widevinecdm.visible': true,
         },
       },
     });
@@ -374,6 +376,8 @@ const LocalWebDriverFirefoxHeadless = generateSubclass(
         prefs: {
           'media.eme.enabled': true,
           'media.gmp-manager.updateEnabled': true,
+          'media.gmp-widevinecdm.enabled': true,
+          'media.gmp-widevinecdm.visible': true,
         },
         args: [
           '-headless',
