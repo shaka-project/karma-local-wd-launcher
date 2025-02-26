@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.9...v1.7.0) (2025-02-26)
+
+
+### Features
+
+* Force to enable Widevine on Firefox ([#88](https://github.com/shaka-project/karma-local-wd-launcher/issues/88)) ([f23b545](https://github.com/shaka-project/karma-local-wd-launcher/commit/f23b54596fcac183d63fa526ee6e264fbfc53437))
+
 ## [1.6.9](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.8...v1.6.9) (2025-02-20)
 
 
