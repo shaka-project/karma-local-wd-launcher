@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.7.0...v1.7.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* Update webdriver-installer to fix Firefox macOS hang ([#90](https://github.com/shaka-project/karma-local-wd-launcher/issues/90)) ([c4aa513](https://github.com/shaka-project/karma-local-wd-launcher/commit/c4aa5136eb70915b0fffa154a59a200a2634452f))
+
 ## [1.7.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.6.9...v1.7.0) (2025-02-26)
 
 
