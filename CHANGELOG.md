@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.7.2...v1.8.0) (2026-01-26)
+
+
+### Features
+
+* Add Opera support ([#97](https://github.com/shaka-project/karma-local-wd-launcher/issues/97)) ([f4bb1e4](https://github.com/shaka-project/karma-local-wd-launcher/commit/f4bb1e4e403d8d03b465f4dc1e0b04d882b11ed9))
+
 ## [1.7.2](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.7.1...v1.7.2) (2025-07-16)
 
 
