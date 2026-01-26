@@ -385,6 +385,62 @@ const LocalWebDriverFirefoxHeadless = generateSubclass(
       },
     });
 
+// Opera binary detection
+const operaOptions = {};
+let operaBinary = which.sync('opera', {nothrow: true});
+
+const operaPaths = {
+  darwin: [
+    '/Applications/Opera.app/Contents/MacOS/Opera',
+    '/Applications/Opera Stable.app/Contents/MacOS/Opera',
+  ],
+  win32: [
+    'C:\\Program Files\\Opera\\opera.exe',
+    'C:\\Program Files (x86)\\Opera\\opera.exe',
+    `C:\\Users\\${os.userInfo().username}\\AppData\\Local\\Programs\\Opera\\opera.exe`,
+  ],
+  linux: [
+    '/snap/bin/opera',
+    '/usr/bin/opera',
+  ],
+};
+
+if (!operaBinary && operaPaths[os.platform()]) {
+  for (const p of operaPaths[os.platform()]) {
+    if (fs.existsSync(p)) {
+      operaBinary = p;
+      break;
+    }
+  }
+}
+
+if (operaBinary) {
+  operaOptions['goog:chromeOptions'] = {
+    binary: operaBinary,
+  };
+}
+
+const LocalWebDriverOpera = generateSubclass(
+    'Opera', 'Opera',
+    'operadriver',
+    (port) => ['--port=' + port],
+    operaOptions);
+
+const LocalWebDriverOperaHeadless = generateSubclass(
+    'Opera', 'OperaHeadless',
+    'operadriver',
+    (port) => ['--port=' + port],
+    mergeOptions(operaOptions, {
+      'goog:chromeOptions': {
+        args: [
+          '--headless',
+          '--no-sandbox',
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+        ],
+      },
+    }));
+
 const LocalWebDriverSafari = generateSafariDriver('Safari');
 
 const LocalWebDriverSafariIOS = generateSafariDriver('SafariIOS', 'iPhone');
@@ -407,6 +463,8 @@ module.exports = {
   'launcher:EdgeHeadless': ['type', LocalWebDriverEdgeHeadless],
   'launcher:Firefox': ['type', LocalWebDriverFirefox],
   'launcher:FirefoxHeadless': ['type', LocalWebDriverFirefoxHeadless],
+  'launcher:Opera': ['type', LocalWebDriverOpera],
+  'launcher:OperaHeadless': ['type', LocalWebDriverOperaHeadless],
 };
 
 // Safari is only supported on Mac.
