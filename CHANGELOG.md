@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.8.0...v1.8.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* Detect Opera on Linux installed with Flatpak ([#99](https://github.com/shaka-project/karma-local-wd-launcher/issues/99)) ([f7dc90e](https://github.com/shaka-project/karma-local-wd-launcher/commit/f7dc90eccfde3b2ba214a8aa4b75a64d20022b7a))
+
 ## [1.8.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.7.2...v1.8.0) (2026-01-26)
 
 
