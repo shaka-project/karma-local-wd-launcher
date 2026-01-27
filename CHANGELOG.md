@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.8.1...v1.8.2) (2026-01-27)
+
+
+### Bug Fixes
+
+* **ci:** Update release tokens and re-release ([#101](https://github.com/shaka-project/karma-local-wd-launcher/issues/101)) ([12e1c41](https://github.com/shaka-project/karma-local-wd-launcher/commit/12e1c41e4b37be2a13a063101333d70febbae5f1))
+
 ## [1.8.1](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.8.0...v1.8.1) (2026-01-27)
 
 
