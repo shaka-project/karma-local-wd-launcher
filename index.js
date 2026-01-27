@@ -402,6 +402,7 @@ const operaPaths = {
   linux: [
     '/snap/bin/opera',
     '/usr/bin/opera',
+    '/var/lib/flatpak/exports/bin/com.opera.Opera',
   ],
 };
 
