@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.8.3...v1.9.0) (2026-08-05)
+
+
+### Features
+
+* Add support for Chrome on Android ([#127](https://github.com/shaka-project/karma-local-wd-launcher/issues/127)) ([3d26601](https://github.com/shaka-project/karma-local-wd-launcher/commit/3d266017b467b822e182bdf12052a7e2acaa0581))
+
 ## [1.8.3](https://github.com/shaka-project/karma-local-wd-launcher/compare/v1.8.2...v1.8.3) (2026-02-11)
 
 
