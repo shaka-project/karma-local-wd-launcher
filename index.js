@@ -297,7 +297,15 @@ const LocalWebDriverChromeHeadless = generateSubclass(
       },
     });
 
-// TODO: Add Chrome on android?
+const LocalWebDriverChromeAndroid = generateSubclass(
+    'Chrome', 'ChromeAndroid',
+    'chromedriver-android',
+    (port) => ['--port=' + port],
+    {
+      'goog:chromeOptions': {
+        'androidPackage': 'com.android.chrome',
+      },
+    });
 
 // If a binary is found with the name "microsoft-edge" in the PATH, specify
 // that explicitly.  This works around the following edgedriver bug:
@@ -460,6 +468,7 @@ const LocalWebDriverSafariTP = generateSubclass(
 module.exports = {
   'launcher:Chrome': ['type', LocalWebDriverChrome],
   'launcher:ChromeHeadless': ['type', LocalWebDriverChromeHeadless],
+  'launcher:ChromeAndroid': ['type', LocalWebDriverChromeAndroid],
   'launcher:Edge': ['type', LocalWebDriverEdge],
   'launcher:EdgeHeadless': ['type', LocalWebDriverEdgeHeadless],
   'launcher:Firefox': ['type', LocalWebDriverFirefox],
